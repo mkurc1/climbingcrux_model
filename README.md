@@ -4,7 +4,7 @@ Climbing crux model is a project that aims to recognize climbing holds, distance
 
 ## Data
 
-To reach the goal of this project, I will use the data from the [Kaggle](https://www.kaggle.com/datasets/tomasslama/indoor-climbing-gym-hold-segmentation). They are contains images from a few different climbing gyms.
+To reach the goal of this project, I will use photos form private collection.
 
 ## License
 
