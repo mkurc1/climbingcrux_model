@@ -1,0 +1,7 @@
+path: # Path to the dataset
+train: images/train #train images
+val: images/train #validation images
+
+# Classes
+names:
+  0: hold
