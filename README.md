@@ -6,7 +6,9 @@ The climbing crux model is a machine-learning project that aims to recognize cli
 
 ## Data
 
-To reach the goal of this project, I will use photos form private collection.
+To achieve the goal of this project, I will use photos from a private collection. You can download the dataset from the link below. It also contains the annotations in the YOLO format.
+
+* [Download the dataset](https://drive.google.com/file/d/1JBzTWpQVjzBkB_mmd7ztzu2ifw78tLrx/view?usp=sharing)
 
 ## Useful links
 
