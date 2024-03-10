@@ -1,5 +1,5 @@
 *.pt
 /datasets/*
 !/datasets/.gitkeep
-/runs/*
-!/runs/.gitkeep
+/notebooks/runs/*
+!/notebooks/runs/.gitkeep

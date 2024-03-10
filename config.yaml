@@ -1,6 +1,5 @@
-path: # Path to the dataset
-train: images/train #train images
-val: images/train #validation images
+train: datasets/images/train #train images
+val: datasets/images/val #validation images
 
 # Classes
 names:
