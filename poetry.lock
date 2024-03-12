@@ -1194,13 +1194,13 @@ files = [
 
 [[package]]
 name = "jupyterlab-server"
-version = "2.25.3"
+version = "2.25.4"
 description = "A set of server components for JupyterLab and JupyterLab like applications."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "jupyterlab_server-2.25.3-py3-none-any.whl", hash = "sha256:c48862519fded9b418c71645d85a49b2f0ec50d032ba8316738e9276046088c1"},
-    {file = "jupyterlab_server-2.25.3.tar.gz", hash = "sha256:846f125a8a19656611df5b03e5912c8393cea6900859baa64fa515eb64a8dc40"},
+    {file = "jupyterlab_server-2.25.4-py3-none-any.whl", hash = "sha256:eb645ecc8f9b24bac5decc7803b6d5363250e16ec5af814e516bc2c54dd88081"},
+    {file = "jupyterlab_server-2.25.4.tar.gz", hash = "sha256:2098198e1e82e0db982440f9b5136175d73bea2cd42a6480aa6fd502cb23c4f9"},
 ]
 
 [package.dependencies]
@@ -1215,7 +1215,7 @@ requests = ">=2.31"
 [package.extras]
 docs = ["autodoc-traits", "jinja2 (<3.2.0)", "mistune (<4)", "myst-parser", "pydata-sphinx-theme", "sphinx", "sphinx-copybutton", "sphinxcontrib-openapi (>0.8)"]
 openapi = ["openapi-core (>=0.18.0,<0.19.0)", "ruamel-yaml"]
-test = ["hatch", "ipykernel", "openapi-core (>=0.18.0,<0.19.0)", "openapi-spec-validator (>=0.6.0,<0.8.0)", "pytest (>=7.0)", "pytest-console-scripts", "pytest-cov", "pytest-jupyter[server] (>=0.6.2)", "pytest-timeout", "requests-mock", "ruamel-yaml", "sphinxcontrib-spelling", "strict-rfc3339", "werkzeug"]
+test = ["hatch", "ipykernel", "openapi-core (>=0.18.0,<0.19.0)", "openapi-spec-validator (>=0.6.0,<0.8.0)", "pytest (>=7.0,<8)", "pytest-console-scripts", "pytest-cov", "pytest-jupyter[server] (>=0.6.2)", "pytest-timeout", "requests-mock", "ruamel-yaml", "sphinxcontrib-spelling", "strict-rfc3339", "werkzeug"]
 
 [[package]]
 name = "jupyterlab-widgets"
@@ -1836,6 +1836,28 @@ files = [
 ]
 
 [[package]]
+name = "opencv-contrib-python"
+version = "4.9.0.80"
+description = "Wrapper package for OpenCV python bindings."
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "opencv-contrib-python-4.9.0.80.tar.gz", hash = "sha256:ff1c00b06e2c3f4ad47de64fa9c527d67f7c6fce93f513b64163d41bea7c41b2"},
+    {file = "opencv_contrib_python-4.9.0.80-cp37-abi3-macosx_10_16_x86_64.whl", hash = "sha256:86078d3653ec3107877536c9178622b1f98b51acf59e554ddbc552785cba55fa"},
+    {file = "opencv_contrib_python-4.9.0.80-cp37-abi3-macosx_11_0_arm64.whl", hash = "sha256:b52e381144f774b486729ccee69911bdc7d16b5ced4830502e906ad803373ab0"},
+    {file = "opencv_contrib_python-4.9.0.80-cp37-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:760e76c535da81e50f5a5a0acd85bada376f505736875eb446811b4b76fb9bb5"},
+    {file = "opencv_contrib_python-4.9.0.80-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:89ca1508dd895ae42176640bdd503cac82772f6efa25120738a469a6a69de321"},
+    {file = "opencv_contrib_python-4.9.0.80-cp37-abi3-win32.whl", hash = "sha256:4ce33844dbdf4bcbb0bd1ea7249367ffccab82de09f531ad25ac258aca5f813c"},
+    {file = "opencv_contrib_python-4.9.0.80-cp37-abi3-win_amd64.whl", hash = "sha256:fdd9b14028f74af8dbb69f90e6e4a956ce2eb5b59947df28ba0b79d337431477"},
+]
+
+[package.dependencies]
+numpy = [
+    {version = ">=1.26.0", markers = "python_version >= \"3.12\""},
+    {version = ">=1.23.5", markers = "python_version >= \"3.11\" and python_version < \"3.12\""},
+]
+
+[[package]]
 name = "opencv-python"
 version = "4.9.0.80"
 description = "Wrapper package for OpenCV python bindings."
@@ -1853,8 +1875,8 @@ files = [
 
 [package.dependencies]
 numpy = [
-    {version = ">=1.23.5", markers = "python_version >= \"3.11\" and python_version < \"3.12\""},
     {version = ">=1.26.0", markers = "python_version >= \"3.12\""},
+    {version = ">=1.23.5", markers = "python_version >= \"3.11\" and python_version < \"3.12\""},
 ]
 
 [[package]]
@@ -1870,13 +1892,13 @@ files = [
 
 [[package]]
 name = "packaging"
-version = "23.2"
+version = "24.0"
 description = "Core utilities for Python packages"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "packaging-23.2-py3-none-any.whl", hash = "sha256:8c491190033a9af7e1d931d0b5dacc2ef47509b34dd0de67ed209b5203fc88c7"},
-    {file = "packaging-23.2.tar.gz", hash = "sha256:048fb0e9405036518eaaf48a55953c750c11e1a1b68e0dd1a9d62ed0c092cfc5"},
+    {file = "packaging-24.0-py3-none-any.whl", hash = "sha256:2ddfb553fdf02fb784c234c7ba6ccc288296ceabec964ad2eae3777778130bc5"},
+    {file = "packaging-24.0.tar.gz", hash = "sha256:eb82c5e3e56209074766e6885bb04b8c38a0c015d0a30036ebe7ece34c9989e9"},
 ]
 
 [[package]]
@@ -1919,8 +1941,8 @@ files = [
 
 [package.dependencies]
 numpy = [
-    {version = ">=1.23.2,<2", markers = "python_version == \"3.11\""},
     {version = ">=1.26.0,<2", markers = "python_version >= \"3.12\""},
+    {version = ">=1.23.2,<2", markers = "python_version == \"3.11\""},
 ]
 python-dateutil = ">=2.8.2"
 pytz = ">=2020.1"
@@ -3050,13 +3072,13 @@ tutorials = ["matplotlib", "pandas", "tabulate", "torch"]
 
 [[package]]
 name = "types-python-dateutil"
-version = "2.8.19.20240106"
+version = "2.8.19.20240311"
 description = "Typing stubs for python-dateutil"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "types-python-dateutil-2.8.19.20240106.tar.gz", hash = "sha256:1f8db221c3b98e6ca02ea83a58371b22c374f42ae5bbdf186db9c9a76581459f"},
-    {file = "types_python_dateutil-2.8.19.20240106-py3-none-any.whl", hash = "sha256:efbbdc54590d0f16152fa103c9879c7d4a00e82078f6e2cf01769042165acaa2"},
+    {file = "types-python-dateutil-2.8.19.20240311.tar.gz", hash = "sha256:51178227bbd4cbec35dc9adffbf59d832f20e09842d7dcb8c73b169b8780b7cb"},
+    {file = "types_python_dateutil-2.8.19.20240311-py3-none-any.whl", hash = "sha256:ef813da0809aca76472ca88807addbeea98b19339aebe56159ae2f4b4f70857a"},
 ]
 
 [[package]]
@@ -3083,13 +3105,13 @@ files = [
 
 [[package]]
 name = "ultralytics"
-version = "8.1.25"
+version = "8.1.27"
 description = "Ultralytics YOLOv8 for SOTA object detection, multi-object tracking, instance segmentation, pose estimation and image classification."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "ultralytics-8.1.25-py3-none-any.whl", hash = "sha256:80b391e66cc56e66331836b93f9b7a89a59e68a82cc6d89b412c51ff9a9607d8"},
-    {file = "ultralytics-8.1.25.tar.gz", hash = "sha256:7f1f7c54897781281a7d3ef23c512abfd6d90bbde4fcfd2b76875d4342556057"},
+    {file = "ultralytics-8.1.27-py3-none-any.whl", hash = "sha256:e5932291450d5dcba20c37c4a46ec8630d4b55c6083cc0c9d03b355c112a6b5f"},
+    {file = "ultralytics-8.1.27.tar.gz", hash = "sha256:246e3b4262ab3fbfca9d570b5fd942bd6ba25ea1b8dfeda451d2187f9975c971"},
 ]
 
 [package.dependencies]
@@ -3213,4 +3235,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "d86fad0aedb1abc413be76ad79fa98aee1d4c87a42e4fd18311be1a770d29cf4"
+content-hash = "679504f273f30a27b8c6f87ad96f4eb245781e9d3cee2825e7d41fb9da327aca"

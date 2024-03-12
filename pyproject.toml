@@ -11,6 +11,8 @@ pandas = "^2.2.1"
 jupyterlab = "^4.1.2"
 jupyter = "^1.0.0"
 ultralytics = "^8.1.20"
+opencv-python = "^4.9.0.80"
+opencv-contrib-python = "^4.9.0.80"
 
 
 [build-system]
