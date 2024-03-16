@@ -14,6 +14,7 @@ ultralytics = "^8.1.20"
 opencv-python = "^4.9.0.80"
 opencv-contrib-python = "^4.9.0.80"
 scipy = "^1.12.0"
+imutils = "^0.5.4"
 
 
 [build-system]

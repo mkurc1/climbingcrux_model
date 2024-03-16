@@ -764,6 +764,16 @@ files = [
 ]
 
 [[package]]
+name = "imutils"
+version = "0.5.4"
+description = "A series of convenience functions to make basic image processing functions such as translation, rotation, resizing, skeletonization, displaying Matplotlib images, sorting contours, detecting edges, and much more easier with OpenCV and both Python 2.7 and Python 3."
+optional = false
+python-versions = "*"
+files = [
+    {file = "imutils-0.5.4.tar.gz", hash = "sha256:03827a9fca8b5c540305c0844a62591cf35a0caec199cb0f2f0a4a0fb15d8f24"},
+]
+
+[[package]]
 name = "ipykernel"
 version = "6.29.3"
 description = "IPython Kernel for Jupyter"
@@ -3235,4 +3245,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "11ebab43748d2e4c3ed4db7566df0d670c1d6a3e96d95a9fe4f0988f43fefab1"
+content-hash = "bfa698cef238d110181f24e6c70e0f52f46a5bb20b2d07c2380e4676a7249179"
