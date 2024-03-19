@@ -2,7 +2,7 @@
 
 The climbing crux model is a machine-learning project that aims to recognize climbing holds and the distance between them from a photo and suggest routes that fit the user's climbing level.
 
-The model recognizes climbing holds and volumes from a photo using the YOLOv8 object detection algorithm. The model is trained on a custom dataset containing photos of climbing walls and annotations in the YOLO format.
+The model recognizes climbing holds and volumes from a photo using the YOLOv9 object detection algorithm. The model is trained on a custom dataset containing photos of climbing walls and annotations in the YOLO format.
 
 ![Climbing holds detection preview](./resources/climbing_holds_detection_preview.jpg)
 
