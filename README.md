@@ -18,7 +18,7 @@ The distance between climbing holds is calculated using the distance between the
 
 * [Used marker](./resources/aruco_marker_5x5_200px.png)
 
-![Distance detection preview](./resources/aruco_marker_5x5_200px_preview.png)
+![Distance detection preview](./resources/aruco_marker_5x5_200px_preview.jpg)
 
 ## Useful links
 

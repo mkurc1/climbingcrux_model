@@ -1,0 +1,5 @@
+import cv2
+
+
+MARKER_PERIMETER_IN_CM = 4 * 7
+MARKER_ARUCO_DICT = cv2.aruco.DICT_5X5_50
