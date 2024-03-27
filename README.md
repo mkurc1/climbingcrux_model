@@ -6,6 +6,37 @@ The model recognizes climbing holds and volumes from a photo using the YOLOv9 ob
 
 ![Climbing holds detection preview](./resources/climbing_holds_detection_preview.jpg)
 
+## Setup
+
+To run the project, you need to have Python 3.11 and the required packages installed. You can install the required packages using the following command:
+
+### Install pyenv and Python 3.11
+```bash
+$ curl https://pyenv.run | bash
+$ pyenv install 3.11.8
+```
+
+### Turn on pyenv
+```bash 
+$ pyenv shell 3.11.8
+```
+
+### Install poetry and the required packages
+```bash
+$ python -m pip install poetry
+$ poetry install
+```
+
+### Turn on the virtual environment
+```bash
+$ poetry shell
+```
+
+### Turn on the Jupyter Lab
+```bash
+$ jupyter-lab
+```
+
 ## Data
 
 To achieve the goal of this project, I will use photos from a private collection. You can download the dataset from the link below. It also contains the annotations in the YOLO format.
