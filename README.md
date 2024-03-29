@@ -55,6 +55,7 @@ The distance between climbing holds is calculated using the distance between the
 
 * [Train Yolov8 object detection on a custom dataset](https://www.youtube.com/watch?v=m9fH9OWn8YM)
 * [Object Detection with YOLO v8 on Mac M1](https://www.youtube.com/watch?v=kEcWUZ8unmc)
+* [Online Annotation Platform](https://www.cvat.ai/)
 
 ## License
 
