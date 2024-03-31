@@ -4,9 +4,12 @@ import math
 
 class ArucoMarker:
     def __init__(self, aruco_dict: int, image: cv2.typing.MatLike, marker_perimeter_in_cm: float):
+        gray = cv2.cvtColor(image.copy(), cv2.COLOR_BGR2GRAY)
+        gray = cv2.GaussianBlur(gray, (7, 7), 0)
+
         dictionary = cv2.aruco.getPredefinedDictionary(aruco_dict)
         params = cv2.aruco.DetectorParameters()
-        markers = cv2.aruco.detectMarkers(image.copy(), dictionary, parameters=params)[0]
+        markers = cv2.aruco.detectMarkers(gray, dictionary, parameters=params)[0]
 
         if markers is None:
             raise ValueError("No ArUco marker detected")
