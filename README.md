@@ -39,7 +39,7 @@ $ jupyter-lab
 
 ## Data
 
-To achieve the goal of this project, I will use photos from a private collection. You can download the dataset from the link below. It also contains the annotations in the YOLO format.
+To achieve the goal of this project, I will use photos from a private collection of climbing walls. You can download the dataset from the link below. It also contains photos and the annotations in the YOLO format.
 
 * [Download the dataset](https://drive.google.com/file/d/1JBzTWpQVjzBkB_mmd7ztzu2ifw78tLrx/view?usp=sharing)
 
@@ -50,6 +50,16 @@ The distance between climbing holds is calculated using the distance between the
 * [Used marker](./resources/aruco_marker_5x5_200px.png)
 
 ![Distance detection preview](./resources/aruco_marker_5x5_200px_preview.jpg)
+
+## Metrics for object detection
+
+The model is evaluated using the following metrics:
+
+mAP (mean Average Precision) - the average of the precision-recall curves at different IoU thresholds.
+
+* map50-95 - 0.3993934465027518
+* map50 - 0.5487853745683408
+* map75 - 0.46319685374230357
 
 ## Useful links
 
