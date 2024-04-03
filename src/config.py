@@ -10,7 +10,7 @@ MARKER_ARUCO_DICT = cv2.aruco.DICT_5X5_50
 
 YOLO_CONFIG_PATH = os.path.join(BASE_DIR, 'config.yaml')
 YOLO_BASE_MODEL = 'yolov9c.pt'
-YOLO_MODEL_PATH = os.path.join(BASE_DIR, 'notebooks', 'runs', 'detect', 'train3', 'weights', 'best.pt')
+YOLO_MODEL_PATH = os.path.join(BASE_DIR, 'notebooks', 'runs', 'detect', 'train4', 'weights', 'best.pt')
 
 # Chose Apple Metal Performance Shaders (MPS) if available, otherwise use CPU
 # YOLO_DEVICE = 'mps' if torch.backends.mps.is_available() else 'cpu'
