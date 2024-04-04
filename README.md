@@ -61,6 +61,12 @@ mAP (mean Average Precision) - the average of the precision-recall curves at dif
 * map50 - 0.798542767602449
 * map75 - 0.7193287820994217
 
+## Model
+
+You can download the trained model from the link below.
+
+* [Download the model](https://drive.google.com/file/d/1n2eCwIOLOGnisuqwGP7IY1-T6J1YNScu/view?usp=sharing)
+
 ## Useful links
 
 * [Train Yolov8 object detection on a custom dataset](https://www.youtube.com/watch?v=m9fH9OWn8YM)
