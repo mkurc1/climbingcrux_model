@@ -57,9 +57,9 @@ The model is evaluated using the following metrics:
 
 mAP (mean Average Precision) - the average of the precision-recall curves at different IoU thresholds.
 
-* map50-95 - 0.6456433589449301
-* map50 - 0.798542767602449
-* map75 - 0.7193287820994217
+* map50-95 - 0.8216387037838236
+* map50 - 0.9298378191260248
+* map75 - 0.8925210764855455
 
 ## Model
 
