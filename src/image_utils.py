@@ -1,10 +1,9 @@
-import math
 import cv2
 from PIL import Image
 from IPython.display import display
 
 from src.aruco_marker import ArucoMarker
-from src.detected_object import DetectedObject
+from src.model.detected_object import DetectedObject
 
 
 def draw_bboxes(img: cv2.typing.MatLike, detected_objects: [DetectedObject], bbox_color: cv2.typing.Scalar,
@@ -33,22 +32,6 @@ def draw_circle_around_detected_object(img: cv2.typing.MatLike, detected_object:
     cv2.circle(img, detected_object.get_center(), radius_in_pixels, circle_color, line_width)
 
     return img
-
-
-def get_objects_around_detected_object(detected_objects: [DetectedObject], center_object: DetectedObject, marker: ArucoMarker,
-                                       radius_in_centimeters: int) -> [DetectedObject]:
-    object_around = []
-
-    radius_in_pixels = int(radius_in_centimeters * marker.get_pixels_per_centimeter())
-    center_point = center_object.get_center()
-
-    for detected_object in detected_objects:
-        x1, y1, x2, y2 = detected_object.bbox
-        distance = math.sqrt((x1 - center_point[0]) ** 2 + (y1 - center_point[1]) ** 2)
-        if distance < radius_in_pixels and detected_object.bbox not in center_object.bbox:
-            object_around.append(detected_object)
-
-    return object_around
 
 
 def display_image(img: cv2.typing.MatLike) -> None:
