@@ -30,8 +30,10 @@ def detect(img: cv2.typing.MatLike, conf: float = 0.85, imgsz: int = 1216) -> [D
     return detected_objects
 
 
-def get_objects_around_detected_object(detected_objects: [DetectedObject], center_object: DetectedObject,
-                                       marker: ArucoMarker, radius_in_centimeters: int) -> [DetectedObject]:
+def get_objects_around_detected_object(detected_objects: [DetectedObject],
+                                       center_object: DetectedObject,
+                                       marker: ArucoMarker,
+                                       radius_in_centimeters: int) -> [DetectedObject]:
     object_around = []
 
     radius_in_pixels = int(radius_in_centimeters * marker.get_pixels_per_centimeter())

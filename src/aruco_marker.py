@@ -1,5 +1,5 @@
-import cv2
 import math
+import cv2
 
 
 class ArucoMarker:
@@ -43,7 +43,10 @@ class ArucoMarker:
         return math.dist(self.top_right, self.bottom_right)
 
     def get_center(self) -> tuple[int, int]:
-        return int((self.top_left[0] + self.bottom_right[0]) / 2), int((self.top_left[1] + self.bottom_right[1]) / 2)
+        return (
+            int((self.top_left[0] + self.bottom_right[0]) / 2),
+            int((self.top_left[1] + self.bottom_right[1]) / 2)
+        )
 
     def get_width_in_cm(self) -> float:
         return self.get_width() / self.get_pixels_per_centimeter()
@@ -51,7 +54,8 @@ class ArucoMarker:
     def get_height_in_cm(self) -> float:
         return self.get_height() / self.get_pixels_per_centimeter()
 
-    def draw_bounding_box(self, image: cv2.typing.MatLike, color: tuple[int, int, int], thickness: int = 2) -> None:
+    def draw_bounding_box(self, image: cv2.typing.MatLike, color: tuple[int, int, int],
+                          thickness: int = 2) -> None:
         cv2.line(image, self.top_left, self.top_right, color, thickness)
         cv2.line(image, self.top_right, self.bottom_right, color, thickness)
         cv2.line(image, self.bottom_right, self.bottom_left, color, thickness)
