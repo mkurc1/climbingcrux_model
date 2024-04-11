@@ -3,3 +3,6 @@
 !/datasets/.gitkeep
 /notebooks/runs/*
 !/notebooks/runs/.gitkeep
+/model/*
+!/model/.gitkeep
+.env

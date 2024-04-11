@@ -32,6 +32,13 @@ $ poetry install
 $ poetry shell
 ```
 
+### Create `env` file by copying the example and update the model path
+
+```bash
+$ cp .env.dist .env
+$ nano .env
+```
+
 ### Turn on the Jupyter Lab
 ```bash
 $ jupyter-lab
