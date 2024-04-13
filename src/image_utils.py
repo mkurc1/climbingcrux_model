@@ -34,6 +34,16 @@ def draw_circle_around_detected_object(img: cv2.typing.MatLike, detected_object:
     return img
 
 
+def draw_line(img: cv2.typing.MatLike, start_point: cv2.typing.Point, end_point: cv2.typing.Point,
+              color: cv2.typing.Scalar, thickness: int, override: bool = True) -> cv2.typing.MatLike:
+    if not override:
+        img = img.copy()
+
+    cv2.line(img, start_point, end_point, color, thickness)
+
+    return img
+
+
 def display_image(img: cv2.typing.MatLike) -> None:
     preview = cv2.cvtColor(img.copy(), cv2.COLOR_BGR2RGB)  # Converting BGR to RGB
     display(Image.fromarray(preview))
