@@ -25,11 +25,19 @@ def draw_bboxes(img: cv2.typing.MatLike, detected_objects: [DetectedObject], bbo
 def draw_circle_around_detected_object(img: cv2.typing.MatLike, detected_object: DetectedObject, marker: ArucoMarker,
                                        radius_in_centimeters: int, circle_color: cv2.typing.Scalar, line_width: int,
                                        override: bool = True) -> cv2.typing.MatLike:
+
+    return draw_circle_around_point(img, detected_object.get_center(), marker, radius_in_centimeters, circle_color,
+                                    line_width, override)
+
+
+def draw_circle_around_point(img: cv2.typing.MatLike, point: cv2.typing.Point, marker: ArucoMarker,
+                                       radius_in_centimeters: int, circle_color: cv2.typing.Scalar, line_width: int,
+                                       override: bool = True) -> cv2.typing.MatLike:
     if not override:
         img = img.copy()
 
     radius_in_pixels = int(radius_in_centimeters * marker.get_pixels_per_centimeter())
-    cv2.circle(img, detected_object.get_center(), radius_in_pixels, circle_color, line_width)
+    cv2.circle(img, point, radius_in_pixels, circle_color, line_width)
 
     return img
 
