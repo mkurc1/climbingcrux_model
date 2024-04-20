@@ -7,4 +7,3 @@ class BodyProportion:
         self.trunk = self.head * 2.6
         self.arm = self.head * 3.5
         self.leg = self.head * 4
-
