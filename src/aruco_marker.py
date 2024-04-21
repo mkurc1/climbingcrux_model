@@ -54,6 +54,9 @@ class ArucoMarker:
     def get_height_in_cm(self) -> float:
         return self.get_height() / self.get_pixels_per_centimeter()
 
+    def convert_cm_to_pixel(self, cm: float) -> int:
+        return int(cm * self.get_pixels_per_centimeter())
+
     def draw_bounding_box(self, image: cv2.typing.MatLike, color: tuple[int, int, int],
                           thickness: int = 2) -> None:
         cv2.line(image, self.top_left, self.top_right, color, thickness)

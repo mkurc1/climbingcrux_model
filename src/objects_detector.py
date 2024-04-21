@@ -32,17 +32,15 @@ def detect(img: cv2.typing.MatLike, conf: float = 0.85, imgsz: int = 1216) -> [D
 
 def get_objects_around_detected_object(detected_objects: [DetectedObject],
                                        center_object: DetectedObject,
-                                       marker: ArucoMarker,
-                                       radius_in_centimeters: int) -> [DetectedObject]:
+                                       radius: int) -> [DetectedObject]:
     object_around = []
 
-    radius_in_pixels = int(radius_in_centimeters * marker.get_pixels_per_centimeter())
     center_point = center_object.get_center()
 
     for detected_object in detected_objects:
         x1, y1, x2, y2 = detected_object.bbox
         distance = math.sqrt((x1 - center_point[0]) ** 2 + (y1 - center_point[1]) ** 2)
-        if distance < radius_in_pixels and detected_object.bbox not in center_object.bbox:
+        if distance < radius and detected_object.bbox not in center_object.bbox:
             object_around.append(detected_object)
 
     return object_around

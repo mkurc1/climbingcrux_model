@@ -21,10 +21,15 @@ YOLO_MODEL_PATH = os.path.join(BASE_DIR, 'model', os.getenv('YOLO_MODEL_PATH'))
 # Use temporary CPU for now. There is some issue with MPS
 YOLO_DEVICE = 'cpu'
 
-MARKER_BBOX_COLOR = (0, 255, 0)
-TXT_COLOR = (0, 0, 0)
-TXT_BG_COLOR = (255, 255, 255)
-BBOX_COLOR = (0, 255, 0)
-BBOX_CENTER_COLOR = (0, 0, 255)
+MARKER_BBOX_COLOR = (0, 255, 0)  # Green
+TXT_COLOR = (0, 0, 0)  # Black
+TXT_BG_COLOR = (255, 255, 255)  # White
+BBOX_COLOR = (0, 255, 0)  # Green
+BBOX_CENTER_COLOR = (0, 0, 255)  # Red
+
+PROBLEM_STEP_BBOX_COLOR = (0, 0, 255)  # Red
+
+CLIMBER_HEIGHT_IN_CM = 180
+STEP_RADIUS_IN_CM = 80
 
 LINE_WIDTH = 2
