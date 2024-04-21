@@ -3,6 +3,7 @@ from PIL import Image
 from IPython.display import display
 
 from src.model.detected_object import DetectedObject
+from src.model.body_part import BodyPart
 
 
 def draw_bboxes(img: cv2.typing.MatLike, detected_objects: [DetectedObject], bbox_color: cv2.typing.Scalar,
@@ -45,6 +46,15 @@ def draw_line(img: cv2.typing.MatLike, start_point: cv2.typing.Point, end_point:
         img = img.copy()
 
     cv2.line(img, start_point, end_point, color, thickness)
+
+    return img
+
+
+def draw_body_part(img: cv2.typing.MatLike, body_part: BodyPart, override: bool = True) -> cv2.typing.MatLike:
+    if not override:
+        img = img.copy()
+
+    cv2.line(img, body_part.start, body_part.end, body_part.color, body_part.thickness)
 
     return img
 
