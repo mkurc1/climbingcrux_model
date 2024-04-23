@@ -3,6 +3,8 @@ from pathlib import Path
 import cv2
 from dotenv import load_dotenv
 
+from src.model.color import Color
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 ENV_FILE_PATH = os.path.join(BASE_DIR, '.env')
@@ -21,13 +23,13 @@ YOLO_MODEL_PATH = os.path.join(BASE_DIR, 'model', os.getenv('YOLO_MODEL_PATH'))
 # Use temporary CPU for now. There is some issue with MPS
 YOLO_DEVICE = 'cpu'
 
-MARKER_BBOX_COLOR = (0, 255, 0)  # Green
-TXT_COLOR = (0, 0, 0)  # Black
-TXT_BG_COLOR = (255, 255, 255)  # White
-BBOX_COLOR = (0, 255, 0)  # Green
-BBOX_CENTER_COLOR = (0, 0, 255)  # Red
+MARKER_BBOX_COLOR = Color.green()
+TXT_COLOR = Color.black()
+TXT_BG_COLOR = Color.white()
+BBOX_COLOR = Color.green()
+BBOX_CENTER_COLOR = Color.red()
 
-PROBLEM_STEP_BBOX_COLOR = (0, 0, 255)  # Red
+PROBLEM_STEP_BBOX_COLOR = Color.red()
 
 CLIMBER_HEIGHT_IN_CM = 180
 STEP_RADIUS_IN_CM = 80

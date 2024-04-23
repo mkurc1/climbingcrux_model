@@ -1,6 +1,8 @@
 import math
 import cv2
 
+from src.model.color import Color
+
 
 class ArucoMarker:
     def __init__(self, aruco_dict: int, image: cv2.typing.MatLike, marker_perimeter_in_cm: float):
@@ -57,9 +59,9 @@ class ArucoMarker:
     def convert_cm_to_pixel(self, cm: float) -> int:
         return int(cm * self.get_pixels_per_centimeter())
 
-    def draw_bounding_box(self, image: cv2.typing.MatLike, color: tuple[int, int, int],
+    def draw_bounding_box(self, image: cv2.typing.MatLike, color: Color,
                           thickness: int = 2) -> None:
-        cv2.line(image, self.top_left, self.top_right, color, thickness)
-        cv2.line(image, self.top_right, self.bottom_right, color, thickness)
-        cv2.line(image, self.bottom_right, self.bottom_left, color, thickness)
-        cv2.line(image, self.bottom_left, self.top_left, color, thickness)
+        cv2.line(image, self.top_left, self.top_right, color.bgr(), thickness)
+        cv2.line(image, self.top_right, self.bottom_right, color.bgr(), thickness)
+        cv2.line(image, self.bottom_right, self.bottom_left, color.bgr(), thickness)
+        cv2.line(image, self.bottom_left, self.top_left, color.bgr(), thickness)
