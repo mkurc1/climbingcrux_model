@@ -30,17 +30,15 @@ def detect(img: cv2.typing.MatLike, conf: float = 0.85, imgsz: int = 1216) -> [D
     return detected_objects
 
 
-def get_objects_around_detected_object(detected_objects: [DetectedObject],
-                                       center_object: DetectedObject,
-                                       radius: int) -> [DetectedObject]:
+def get_objects_around_point(detected_objects: [DetectedObject],
+                             point: tuple[int, int],
+                             radius: int) -> [DetectedObject]:
     object_around = []
-
-    center_point = center_object.get_center()
 
     for detected_object in detected_objects:
         x1, y1, x2, y2 = detected_object.bbox
-        distance = math.sqrt((x1 - center_point[0]) ** 2 + (y1 - center_point[1]) ** 2)
-        if distance < radius and detected_object.bbox not in center_object.bbox:
+        distance = math.sqrt((x1 - point[0]) ** 2 + (y1 - point[1]) ** 2)
+        if distance < radius:
             object_around.append(detected_object)
 
     return object_around
