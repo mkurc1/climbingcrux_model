@@ -31,17 +31,21 @@ def detect(img: cv2.typing.MatLike, conf: float = 0.85, imgsz: int = 1216) -> [D
 
 
 def get_objects_around_point(detected_objects: [DetectedObject],
-                             point: tuple[int, int],
-                             radius: int) -> [DetectedObject]:
-    object_around = []
+                             point: tuple[int, int], radius: int,
+                             exclude_detected_objects: [DetectedObject] = ()) -> [DetectedObject]:
+    objects_around = []
 
     for detected_object in detected_objects:
         x1, y1, x2, y2 = detected_object.bbox
         distance = math.sqrt((x1 - point[0]) ** 2 + (y1 - point[1]) ** 2)
         if distance < radius:
-            object_around.append(detected_object)
+            objects_around.append(detected_object)
 
-    return object_around
+    for exclude_detected_object in exclude_detected_objects:
+        if exclude_detected_object in objects_around:
+            objects_around.remove(exclude_detected_object)
+
+    return objects_around
 
 
 def get_distance_between_objects_in_cm(object1: DetectedObject,
