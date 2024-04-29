@@ -48,11 +48,11 @@ def get_objects_around_point(detected_objects: [DetectedObject],
     return objects_around
 
 
-def get_distance_between_objects_in_cm(object1: DetectedObject,
-                                       object2: DetectedObject,
-                                       marker: ArucoMarker) -> int:
+def get_distance_between_objects(object1: DetectedObject,
+                                 object2: DetectedObject,
+                                 ) -> int:
     c1 = object1.get_center()
     c2 = object2.get_center()
 
     distance = math.sqrt((c1[0] - c2[0]) ** 2 + (c1[1] - c2[1]) ** 2)
-    return int(distance / marker.get_pixels_per_centimeter())
+    return int(distance)
