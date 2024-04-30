@@ -19,7 +19,8 @@ class ClimberStartPosition:
     def prepare(self, climber_height_in_cm: int,
                 starting_steps_max_distance_from_ground_in_cm: int) -> Climber:
         climber = Climber()
-        body_proportion = BodyProportion(climber_height_in_cm)
+        climber_height_in_px = self.marker.convert_cm_to_pixel(climber_height_in_cm)
+        body_proportion = BodyProportion(climber_height_in_px)
 
         starting_steps_max_distance_from_ground_in_px = (
             self.marker.convert_cm_to_pixel(starting_steps_max_distance_from_ground_in_cm))
