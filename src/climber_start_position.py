@@ -22,15 +22,9 @@ class ClimberStartPosition:
         climber_height_in_px = self.marker.convert_cm_to_pixel(climber_height_in_cm)
         body_proportion = BodyProportion(climber_height_in_px)
 
-        starting_steps_max_distance_from_ground_in_px = (
-            self.marker.convert_cm_to_pixel(starting_steps_max_distance_from_ground_in_cm))
-
-        # 40 cm of bottom boxes from image but exclude from left and right 15%
-        bottom_objects = [obj for obj in self.detected_objects if
-                          obj.bbox[3] > self.img_height - starting_steps_max_distance_from_ground_in_px and
-                          obj.bbox[0] > 0.15 * self.img_width and
-                          obj.bbox[2] < 0.85 * self.img_width
-                          ]
+        bottom_objects = self.__get_bottom_objects_fit_as_steps(
+            starting_steps_max_distance_from_ground_in_cm
+        )
 
         random_starting_step_id = np.random.choice(len(bottom_objects), 1, replace=False)[0]
         random_starting_step = bottom_objects[random_starting_step_id]
@@ -139,6 +133,17 @@ class ClimberStartPosition:
         self.climber.right_hand = self.__find_hold_for_right_hand(body_proportion, position_between_starting_steps)
 
         return self.climber
+
+    def __get_bottom_objects_fit_as_steps(self, max_distance_from_ground_in_cm: int) -> [DetectedObject]:
+        max_distance_from_ground_in_px = (
+            self.marker.convert_cm_to_pixel(max_distance_from_ground_in_cm))
+
+        # 40 cm of bottom boxes from image but exclude from left and right 15%
+        return [obj for obj in self.detected_objects if
+                obj.bbox[3] > self.img_height - max_distance_from_ground_in_px and
+                obj.bbox[0] > 0.15 * self.img_width and
+                obj.bbox[2] < 0.85 * self.img_width
+                ]
 
     def __find_hold_for_left_hand(self, body_proportion: BodyProportion,
                                   position_between_starting_steps: tuple[int, int]) -> BodyPart:
