@@ -26,23 +26,20 @@ class ClimberStartPosition:
             starting_steps_max_distance_from_ground_in_cm
         )
 
-        random_starting_step_id = np.random.choice(len(bottom_objects), 1, replace=False)[0]
-        random_starting_step = bottom_objects[random_starting_step_id]
+        starting_step_1_id = np.random.choice(len(bottom_objects), 1, replace=False)[0]
+        starting_step_1 = bottom_objects[starting_step_1_id]
 
         # Get bottom holds in the circle but not the starting holds
         holds_in_circle = objects_detector.get_objects_around_point(
             detected_objects=bottom_objects,
-            point=random_starting_step.get_center(),
+            point=starting_step_1.get_center(),
             radius=self.marker.convert_cm_to_pixel(config.STEP_RADIUS_IN_CM),
-            exclude_detected_objects=[random_starting_step]
+            exclude_detected_objects=[starting_step_1]
         )
 
         # Get one random hold in the circle as the second step
-        random_second_step_id = np.random.choice(len(holds_in_circle), 1, replace=False)[0]
-        random_second_step = holds_in_circle[random_second_step_id]
-
-        starting_step_1 = random_starting_step
-        starting_step_2 = random_second_step
+        starting_step_2_id = np.random.choice(len(holds_in_circle), 1, replace=False)[0]
+        starting_step_2 = holds_in_circle[starting_step_2_id]
 
         # lower starting step
         lower_starting_step = starting_step_1 if starting_step_1.get_center()[1] > starting_step_2.get_center()[
