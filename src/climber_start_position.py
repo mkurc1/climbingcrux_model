@@ -47,14 +47,14 @@ class ClimberStartPosition:
             if starting_step_1.get_center()[1] > starting_step_2.get_center()[1] \
             else starting_step_2
 
-        position_between_starting_steps = (starting_step_1.get_center()[0] +
-                                           starting_step_2.get_center()[0]) / 2
+        body_center = int((starting_step_1.get_center()[0] +
+                           starting_step_2.get_center()[0]) / 2)
 
         top_head_point = (
-            int(position_between_starting_steps),
+            body_center,
             int(lower_starting_step.get_center()[1] - body_proportion.height))
         bottom_head_point = (
-            int(position_between_starting_steps),
+            body_center,
             int(lower_starting_step.get_center()[1] - body_proportion.height +
                 body_proportion.head))
 
@@ -141,9 +141,9 @@ class ClimberStartPosition:
         )
 
         self.__climber.left_hand = self.__find_hold_for_left_hand(
-            body_proportion, position_between_starting_steps)
+            body_proportion, body_center)
         self.__climber.right_hand = self.__find_hold_for_right_hand(
-            body_proportion, position_between_starting_steps)
+            body_proportion, body_center)
 
         return self.__climber
 
@@ -159,7 +159,7 @@ class ClimberStartPosition:
                 ]
 
     def __find_hold_for_left_hand(self, body_proportion: BodyProportion,
-                                  position_between_starting_steps: tuple[int, int]) -> BodyPart:
+                                  body_center: int) -> BodyPart:
         # get holds available for left hand
         holds = objects_detector.get_objects_around_point(
             detected_objects=self.__detected_objects,
@@ -168,9 +168,9 @@ class ClimberStartPosition:
         )
 
         # exclude holds that are on the right side of
-        # the position_between_starting_steps
+        # the body_center
         holds = [hold for hold in holds
-                 if hold.get_center()[0] < position_between_starting_steps]
+                 if hold.get_center()[0] < body_center]
 
         random_left_hand_hold_id = np.random.choice(len(holds), 1, replace=False)[0]
         random_left_hand_hold = holds[random_left_hand_hold_id]
@@ -183,7 +183,7 @@ class ClimberStartPosition:
         )
 
     def __find_hold_for_right_hand(self, body_proportion: BodyProportion,
-                                   position_between_starting_steps: tuple[int, int]) -> BodyPart:
+                                   body_center: int) -> BodyPart:
         # get holds available for right hand
         holds = objects_detector.get_objects_around_point(
             detected_objects=self.__detected_objects,
@@ -192,9 +192,9 @@ class ClimberStartPosition:
         )
 
         # exclude holds that are on the left side of
-        # the position_between_starting_steps
+        # the body_center
         holds = [hold for hold in holds
-                 if hold.get_center()[0] > position_between_starting_steps]
+                 if hold.get_center()[0] > body_center]
 
         random_right_hand_hold_id = np.random.choice(len(holds), 1, replace=False)[0]
         random_right_hand_hold = holds[random_right_hand_hold_id]
