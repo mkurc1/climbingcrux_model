@@ -127,7 +127,8 @@ class ClimberStartPosition:
             start=start_left_leg_point,
             end=end_left_leg_point,
             color=Color.blue(),
-            thickness=10
+            thickness=10,
+            detected_object=starting_left_step
         )
 
         start_right_leg_point = (bottom_trunk_point[0], bottom_trunk_point[1])
@@ -137,7 +138,8 @@ class ClimberStartPosition:
             start=start_right_leg_point,
             end=end_right_leg_point,
             color=Color.blue(),
-            thickness=10
+            thickness=10,
+            detected_object=starting_right_step
         )
 
         self.__climber.left_hand = self.__find_hold_for_left_hand(
@@ -179,7 +181,8 @@ class ClimberStartPosition:
             start=self.__climber.left_shoulder.start,
             end=random_left_hand_hold.get_center(),
             color=Color.red(),
-            thickness=10
+            thickness=10,
+            detected_object=random_left_hand_hold
         )
 
     def __find_hold_for_right_hand(self, body_proportion: BodyProportion,
@@ -203,5 +206,6 @@ class ClimberStartPosition:
             start=self.__climber.right_shoulder.end,
             end=random_right_hand_hold.get_center(),
             color=Color.red(),
-            thickness=10
+            thickness=10,
+            detected_object=random_right_hand_hold
         )
