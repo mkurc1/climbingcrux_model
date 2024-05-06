@@ -1,13 +1,15 @@
 import math
 import cv2
-from src.model.detected_object import DetectedObject
-from src import config
-from src.aruco_marker import ArucoMarker
 from ultralytics import YOLO
 import numpy as np
 
+from src import config
+from src.model.detected_object import DetectedObject
+from src.model.point import Point
 
-def detect(img: cv2.typing.MatLike, conf: float = 0.85, imgsz: int = 1216) -> [DetectedObject]:
+
+def detect(img: cv2.typing.MatLike, conf: float = 0.85,
+           imgsz: int = 1216) -> [DetectedObject]:
     model = YOLO(config.YOLO_MODEL_PATH)
 
     results = model(
@@ -25,19 +27,27 @@ def detect(img: cv2.typing.MatLike, conf: float = 0.85, imgsz: int = 1216) -> [D
 
     detected_objects = []
     for bbox, class_id, center in zip(bboxes, classes, centers):
-        detected_objects.append(DetectedObject(result.names[class_id], bbox, center))
+        detected_objects.append(DetectedObject(
+            class_name=result.names[class_id],
+            bbox=bbox,
+            center=Point(
+                x=int(center[0]),
+                y=int(center[1])
+            )
+        ))
 
     return detected_objects
 
 
 def get_objects_around_point(detected_objects: [DetectedObject],
-                             point: tuple[int, int], radius: int,
-                             exclude_detected_objects: [DetectedObject] = ()) -> [DetectedObject]:
+                             point: Point, radius: int,
+                             exclude_detected_objects: [DetectedObject] = ()
+                             ) -> [DetectedObject]:
     objects_around = []
 
     for detected_object in detected_objects:
         x1, y1, x2, y2 = detected_object.bbox
-        distance = math.sqrt((x1 - point[0]) ** 2 + (y1 - point[1]) ** 2)
+        distance = math.sqrt((x1 - point.x) ** 2 + (y1 - point.y) ** 2)
         if distance < radius:
             objects_around.append(detected_object)
 
@@ -51,8 +61,9 @@ def get_objects_around_point(detected_objects: [DetectedObject],
 def get_distance_between_objects(object1: DetectedObject,
                                  object2: DetectedObject,
                                  ) -> int:
-    c1 = object1.get_center()
-    c2 = object2.get_center()
+    c1 = object1.center
+    c2 = object2.center
 
-    distance = math.sqrt((c1[0] - c2[0]) ** 2 + (c1[1] - c2[1]) ** 2)
+    distance = math.sqrt((c1.x - c2.x) ** 2 + (c1.y - c2.y) ** 2)
+
     return int(distance)

@@ -5,6 +5,7 @@ from IPython.display import display
 from src.model.detected_object import DetectedObject
 from src.model.body_part import BodyPart
 from src.model.color import Color
+from src.model.point import Point
 
 
 def draw_bboxes(img: cv2.typing.MatLike, detected_objects: [DetectedObject], bbox_color: Color,
@@ -16,7 +17,7 @@ def draw_bboxes(img: cv2.typing.MatLike, detected_objects: [DetectedObject], bbo
         x1, y1, x2, y2 = detected_object.bbox
 
         cv2.rectangle(img, (x1, y1), (x2, y2), bbox_color.bgr(), line_width)
-        cv2.circle(img, detected_object.get_center(), 5, bbox_center_color.bgr(), -1)
+        cv2.circle(img, detected_object.center.to_tuple(), 5, bbox_center_color.bgr(), -1)
 
         result_name = detected_object.class_name
         cv2.putText(img, result_name, (x1, y1 - 5), cv2.FONT_HERSHEY_PLAIN, 1, bbox_color.bgr(), line_width)
@@ -26,17 +27,17 @@ def draw_bboxes(img: cv2.typing.MatLike, detected_objects: [DetectedObject], bbo
 def draw_circle_around_detected_object(img: cv2.typing.MatLike, detected_object: DetectedObject,
                                        radius: int, circle_color: Color, line_width: int,
                                        override: bool = True) -> cv2.typing.MatLike:
-    return draw_circle_around_point(img, detected_object.get_center(), radius, circle_color,
+    return draw_circle_around_point(img, detected_object.center, radius, circle_color,
                                     line_width, override)
 
 
-def draw_circle_around_point(img: cv2.typing.MatLike, point: cv2.typing.Point, radius: int,
+def draw_circle_around_point(img: cv2.typing.MatLike, point: Point, radius: int,
                              circle_color: Color, line_width: int,
                              override: bool = True) -> cv2.typing.MatLike:
     if not override:
         img = img.copy()
 
-    cv2.circle(img, point, radius, circle_color.bgr(), line_width)
+    cv2.circle(img, point.to_tuple(), radius, circle_color.bgr(), line_width)
 
     return img
 
@@ -55,7 +56,8 @@ def draw_body_part(img: cv2.typing.MatLike, body_part: BodyPart, override: bool 
     if not override:
         img = img.copy()
 
-    cv2.line(img, body_part.start, body_part.end, body_part.color.bgr(), body_part.thickness)
+    cv2.line(img, body_part.start.to_tuple(), body_part.end.to_tuple(),
+             body_part.color.bgr(), body_part.thickness)
 
     return img
 

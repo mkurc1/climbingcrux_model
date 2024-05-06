@@ -2,10 +2,11 @@ from typing import Optional
 
 from src.model.color import Color
 from src.model.detected_object import DetectedObject
+from src.model.point import Point
 
 
 class BodyPart:
-    def __init__(self, start: tuple[int, int], end: tuple[int, int],
+    def __init__(self, start: Point, end: Point,
                  color: Color, thickness: int = 10,
                  detected_object: Optional[DetectedObject] = None):
         self.start = start

@@ -7,6 +7,7 @@ from src.model.climber import Climber
 from src.model.color import Color
 from src.model.detected_object import DetectedObject
 from src import objects_detector, config
+from src.model.point import Point
 
 
 class ClimberStartPosition:
@@ -30,32 +31,26 @@ class ClimberStartPosition:
         starting_step_1_id = np.random.choice(len(bottom_objects), 1, replace=False)[0]
         starting_step_1 = bottom_objects[starting_step_1_id]
 
-        # Get bottom holds in the circle but not the starting holds
-        holds_in_circle = objects_detector.get_objects_around_point(
+        starting_step_2 = self.__find_hold_in_circle(
             detected_objects=bottom_objects,
-            point=starting_step_1.get_center(),
+            point=starting_step_1.center,
             radius=self.__marker.convert_cm_to_pixel(config.STEP_RADIUS_IN_CM),
             exclude_detected_objects=[starting_step_1]
         )
 
-        # Get one random hold in the circle as the second step
-        starting_step_2_id = np.random.choice(len(holds_in_circle), 1, replace=False)[0]
-        starting_step_2 = holds_in_circle[starting_step_2_id]
-
-        # lower starting step
         lower_starting_step = starting_step_1 \
-            if starting_step_1.get_center()[1] > starting_step_2.get_center()[1] \
+            if starting_step_1.center.y > starting_step_2.center.y \
             else starting_step_2
 
-        body_center = int((starting_step_1.get_center()[0] +
-                           starting_step_2.get_center()[0]) / 2)
+        body_center = int((starting_step_1.center.x +
+                           starting_step_2.center.x) / 2)
 
-        top_head_point = (
+        top_head_point = Point(
             body_center,
-            int(lower_starting_step.get_center()[1] - body_proportion.height))
-        bottom_head_point = (
+            int(lower_starting_step.center.y - body_proportion.height))
+        bottom_head_point = Point(
             body_center,
-            int(lower_starting_step.get_center()[1] - body_proportion.height +
+            int(lower_starting_step.center.y - body_proportion.height +
                 body_proportion.head))
 
         self.__climber.head = BodyPart(
@@ -65,9 +60,10 @@ class ClimberStartPosition:
             thickness=30
         )
 
-        top_neck_point = (top_head_point[0], int(bottom_head_point[1]))
-        bottom_neck_point = (
-            bottom_head_point[0], int(bottom_head_point[1] + body_proportion.neck)
+        top_neck_point = Point(top_head_point.x, int(bottom_head_point.y))
+        bottom_neck_point = Point(
+            bottom_head_point.x,
+            int(bottom_head_point.y + body_proportion.neck)
         )
 
         self.__climber.neck = BodyPart(
@@ -77,8 +73,11 @@ class ClimberStartPosition:
             thickness=10
         )
 
-        top_trunk_point = (top_head_point[0], int(bottom_neck_point[1]))
-        bottom_trunk_point = (bottom_head_point[0], int(bottom_neck_point[1] + body_proportion.trunk))
+        top_trunk_point = Point(top_head_point.x, int(bottom_neck_point.y))
+        bottom_trunk_point = Point(
+            bottom_head_point.x,
+            int(bottom_neck_point.y + body_proportion.trunk)
+        )
 
         self.__climber.trunk = BodyPart(
             start=top_trunk_point,
@@ -87,11 +86,11 @@ class ClimberStartPosition:
             thickness=30
         )
 
-        start_left_shoulder_point = (
-            bottom_neck_point[0] - int(body_proportion.shoulder),
-            bottom_neck_point[1]
+        start_left_shoulder_point = Point(
+            bottom_neck_point.x - int(body_proportion.shoulder),
+            bottom_neck_point.y
         )
-        end_left_shoulder_point = (bottom_neck_point[0], bottom_neck_point[1])
+        end_left_shoulder_point = Point(bottom_neck_point.x, bottom_neck_point.y)
 
         self.__climber.left_shoulder = BodyPart(
             start=start_left_shoulder_point,
@@ -100,10 +99,12 @@ class ClimberStartPosition:
             thickness=10
         )
 
-        start_right_shoulder_point = (bottom_neck_point[0], bottom_neck_point[1])
-        end_right_shoulder_point = (
-            bottom_neck_point[0] + int(body_proportion.shoulder),
-            bottom_neck_point[1]
+        start_right_shoulder_point = Point(
+            bottom_neck_point.x, bottom_neck_point.y
+        )
+        end_right_shoulder_point = Point(
+            bottom_neck_point.x + int(body_proportion.shoulder),
+            bottom_neck_point.y
         )
 
         self.__climber.right_shoulder = BodyPart(
@@ -113,15 +114,17 @@ class ClimberStartPosition:
             thickness=10
         )
 
-        if starting_step_1.get_center()[0] < starting_step_2.get_center()[0]:
+        if starting_step_1.center.x < starting_step_2.center.x:
             starting_left_step = starting_step_1
             starting_right_step = starting_step_2
         else:
             starting_left_step = starting_step_2
             starting_right_step = starting_step_1
 
-        start_left_leg_point = (bottom_trunk_point[0], bottom_trunk_point[1])
-        end_left_leg_point = starting_left_step.get_center()
+        start_left_leg_point = Point(
+            bottom_trunk_point.x, bottom_trunk_point.y
+        )
+        end_left_leg_point = starting_left_step.center
 
         self.__climber.left_leg = BodyPart(
             start=start_left_leg_point,
@@ -131,8 +134,10 @@ class ClimberStartPosition:
             detected_object=starting_left_step
         )
 
-        start_right_leg_point = (bottom_trunk_point[0], bottom_trunk_point[1])
-        end_right_leg_point = starting_right_step.get_center()
+        start_right_leg_point = Point(
+            bottom_trunk_point.x, bottom_trunk_point.y
+        )
+        end_right_leg_point = starting_right_step.center
 
         self.__climber.right_leg = BodyPart(
             start=start_right_leg_point,
@@ -172,14 +177,14 @@ class ClimberStartPosition:
         # exclude holds that are on the right side of
         # the body_center
         holds = [hold for hold in holds
-                 if hold.get_center()[0] < body_center]
+                 if hold.center.x < body_center]
 
         random_left_hand_hold_id = np.random.choice(len(holds), 1, replace=False)[0]
         random_left_hand_hold = holds[random_left_hand_hold_id]
 
         return BodyPart(
             start=self.__climber.left_shoulder.start,
-            end=random_left_hand_hold.get_center(),
+            end=random_left_hand_hold.center,
             color=Color.red(),
             thickness=10,
             detected_object=random_left_hand_hold
@@ -197,15 +202,29 @@ class ClimberStartPosition:
         # exclude holds that are on the left side of
         # the body_center
         holds = [hold for hold in holds
-                 if hold.get_center()[0] > body_center]
+                 if hold.center.x > body_center]
 
         random_right_hand_hold_id = np.random.choice(len(holds), 1, replace=False)[0]
         random_right_hand_hold = holds[random_right_hand_hold_id]
 
         return BodyPart(
             start=self.__climber.right_shoulder.end,
-            end=random_right_hand_hold.get_center(),
+            end=random_right_hand_hold.center,
             color=Color.red(),
             thickness=10,
             detected_object=random_right_hand_hold
         )
+
+    def __find_hold_in_circle(self, detected_objects: [DetectedObject],
+                              point: Point, radius: int,
+                              exclude_detected_objects: [DetectedObject] = ()
+                              ) -> DetectedObject:
+        holds_in_circle = objects_detector.get_objects_around_point(
+            detected_objects=detected_objects,
+            point=point,
+            radius=radius,
+            exclude_detected_objects=exclude_detected_objects
+        )
+
+        object_detect_id = np.random.choice(len(holds_in_circle), 1, replace=False)[0]
+        return holds_in_circle[object_detect_id]
