@@ -38,12 +38,19 @@ class ClimberStartPosition:
             exclude_detected_objects=[starting_step_1]
         )
 
+        if starting_step_1.center.x < starting_step_2.center.x:
+            starting_left_step = starting_step_1
+            starting_right_step = starting_step_2
+        else:
+            starting_left_step = starting_step_2
+            starting_right_step = starting_step_1
+
         lower_starting_step = starting_step_1 \
             if starting_step_1.center.y > starting_step_2.center.y \
             else starting_step_2
 
-        body_center = int((starting_step_1.center.x +
-                           starting_step_2.center.x) / 2)
+        body_center = int((starting_left_step.center.x +
+                           starting_right_step.center.x) / 2)
 
         top_head_point = Point(
             body_center,
@@ -113,13 +120,6 @@ class ClimberStartPosition:
             color=Color.blue(),
             thickness=10
         )
-
-        if starting_step_1.center.x < starting_step_2.center.x:
-            starting_left_step = starting_step_1
-            starting_right_step = starting_step_2
-        else:
-            starting_left_step = starting_step_2
-            starting_right_step = starting_step_1
 
         start_left_leg_point = Point(
             bottom_trunk_point.x, bottom_trunk_point.y
