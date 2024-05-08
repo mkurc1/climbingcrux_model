@@ -1,4 +1,6 @@
 from src.model.body_part import BodyPart
+from src.model.body_proportion import BodyProportion
+from src.model.point import Point
 
 
 class Climber:
@@ -11,3 +13,18 @@ class Climber:
     right_arm: BodyPart = None
     left_leg: BodyPart = None
     right_leg: BodyPart = None
+
+    def __init__(self, height: int):
+        self.body_proportion = BodyProportion(height)
+
+    def get_top_left_point(self) -> Point:
+        return self.head.start
+
+    def get_top_right_point(self) -> Point:
+        return self.head.end
+
+    def get_bottom_left_point(self) -> Point:
+        return self.left_leg.end
+
+    def get_bottom_right_point(self) -> Point:
+        return self.right_leg.end
