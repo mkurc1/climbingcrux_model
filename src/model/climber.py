@@ -28,3 +28,8 @@ class Climber:
 
     def get_bottom_right_point(self) -> Point:
         return self.right_leg.end
+
+    def get_lower_step_point(self) -> Point:
+        if self.left_leg.detected_object.center.y > self.right_leg.detected_object.center.y:
+            return self.left_leg.end
+        return self.right_leg.end
