@@ -43,11 +43,11 @@ def draw_circle_around_point(img: cv2.typing.MatLike, point: Point, radius: int,
 
 
 def draw_line(img: cv2.typing.MatLike, start_point: Point, end_point: Point,
-              color: Color, thickness: int, override: bool = True) -> cv2.typing.MatLike:
+              color: Color, line_width: int, override: bool = True) -> cv2.typing.MatLike:
     if not override:
         img = img.copy()
 
-    cv2.line(img, start_point.to_tuple(), end_point.to_tuple(), color.bgr(), thickness)
+    cv2.line(img, start_point.to_tuple(), end_point.to_tuple(), color.bgr(), line_width)
 
     return img
 
