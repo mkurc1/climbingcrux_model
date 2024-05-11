@@ -52,6 +52,15 @@ def draw_line(img: cv2.typing.MatLike, start_point: Point, end_point: Point,
     return img
 
 
+def draw_rectangle(img: cv2.typing.MatLike, start_point: Point, end_point: Point, color: Color, line_width: int, override: bool = True) -> cv2.typing.MatLike:
+    if not override:
+        img = img.copy()
+
+    cv2.rectangle(img, start_point.to_tuple(), end_point.to_tuple(), color.bgr(), line_width)
+
+    return img
+
+
 def draw_body_part(img: cv2.typing.MatLike, body_part: BodyPart, override: bool = True) -> cv2.typing.MatLike:
     if not override:
         img = img.copy()
