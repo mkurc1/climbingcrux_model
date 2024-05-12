@@ -19,7 +19,7 @@ class ClimberStartPosition:
 
     def prepare(self, climber_height_in_cm: int,
                 starting_steps_max_distance_from_ground_in_cm: int) -> Climber:
-        climber_height_in_px = self.__marker.convert_cm_to_pixel(climber_height_in_cm)
+        climber_height_in_px = self.__marker.convert_cm_to_px(climber_height_in_cm)
 
         climber = Climber(climber_height_in_px)
 
@@ -33,7 +33,7 @@ class ClimberStartPosition:
         starting_step_2 = self.__find_hold_in_circle(
             detected_objects=bottom_objects,
             point=starting_step_1.center,
-            radius=self.__marker.convert_cm_to_pixel(config.STEP_RADIUS_IN_CM),
+            radius=self.__marker.convert_cm_to_px(config.STEP_RADIUS_IN_CM),
             exclude_detected_objects=[starting_step_1]
         )
 
@@ -155,7 +155,7 @@ class ClimberStartPosition:
 
     def __get_bottom_objects_fit_as_steps(self, max_distance_from_ground_in_cm: int) -> [DetectedObject]:
         max_distance_from_ground_in_px = (
-            self.__marker.convert_cm_to_pixel(max_distance_from_ground_in_cm))
+            self.__marker.convert_cm_to_px(max_distance_from_ground_in_cm))
 
         # 40 cm of bottom boxes from image but exclude from left and right 15%
         return [obj for obj in self.__detected_objects if
