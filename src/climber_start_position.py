@@ -1,3 +1,5 @@
+import copy
+
 import numpy as np
 
 from src.aruco_marker import ArucoMarker
@@ -17,21 +19,74 @@ class ClimberStartPosition:
         self.__marker = marker
         self.__detected_objects = detected_objects
 
-    def prepare(self, climber_height_in_cm: int,
+    def prepare_next_step(self, climber: Climber) -> Climber:
+        new_climber = copy.deepcopy(climber)
+
+        lower_step_point = climber.get_lower_step_point()
+
+        twenty_percent_of_climber_leg_height = climber.body_proportion.leg * 0.2
+        forty_percent_of_climber_leg_height = climber.body_proportion.leg * 0.6
+
+        twenty_percent_of_climber_leg_height_point = Point(
+            lower_step_point.x,
+            int(lower_step_point.y - twenty_percent_of_climber_leg_height)
+        )
+
+        forty_percent_of_climber_leg_height_point = Point(
+            lower_step_point.x,
+            int(lower_step_point.y - forty_percent_of_climber_leg_height)
+        )
+
+        rectangle_bottom_left_point = Point(climber.get_bottom_left_point().x,
+                                            twenty_percent_of_climber_leg_height_point.y)
+        rectangle_top_right_point = Point(climber.get_bottom_right_point().x,
+                                          forty_percent_of_climber_leg_height_point.y)
+
+        rectangle_width = rectangle_top_right_point.x - rectangle_bottom_left_point.x
+        if self.__marker.convert_px_to_cm(rectangle_width) < config.STEP_RADIUS_IN_CM:
+            extra_width = self.__marker.convert_cm_to_px(config.STEP_RADIUS_IN_CM) - rectangle_width
+            rectangle_bottom_left_point.x -= extra_width // 2
+            rectangle_top_right_point.x += extra_width // 2
+
+        holds_for_first_foot = [hold for hold in self.__detected_objects if
+                                rectangle_bottom_left_point.x <= hold.center.x <= rectangle_top_right_point.x and rectangle_bottom_left_point.y >= hold.center.y >= rectangle_top_right_point.y]
+
+        holds_for_second_foot = [hold for hold in self.__detected_objects if
+                                 twenty_percent_of_climber_leg_height_point.y >= hold.center.y >= forty_percent_of_climber_leg_height_point.y]
+
+        self.__prepare_new_position(
+            climber=new_climber,
+            holds_for_first_step=holds_for_first_foot,
+            holds_for_second_step=holds_for_second_foot
+        )
+
+        return new_climber
+
+    def prepare_first_step(self, climber_height_in_cm: int,
                 starting_steps_max_distance_from_ground_in_cm: int) -> Climber:
         climber_height_in_px = self.__marker.convert_cm_to_px(climber_height_in_cm)
-
         climber = Climber(climber_height_in_px)
 
         bottom_objects = self.__get_bottom_objects_fit_as_steps(
             starting_steps_max_distance_from_ground_in_cm
         )
 
-        starting_step_1_id = np.random.choice(len(bottom_objects), 1, replace=False)[0]
-        starting_step_1 = bottom_objects[starting_step_1_id]
+        self.__prepare_new_position(
+            climber=climber,
+            holds_for_first_step=bottom_objects,
+            holds_for_second_step=bottom_objects
+        )
+
+        return climber
+
+    def __prepare_new_position(self, climber: Climber,
+                               holds_for_first_step: [DetectedObject],
+                               holds_for_second_step: [DetectedObject]) -> None:
+        starting_step_1_id = np.random.choice(len(holds_for_first_step), 1, replace=False)[0]
+        starting_step_1 = holds_for_first_step[starting_step_1_id]
 
         starting_step_2 = self.__find_hold_in_circle(
-            detected_objects=bottom_objects,
+            detected_objects=holds_for_second_step,
             point=starting_step_1.center,
             radius=self.__marker.convert_cm_to_px(config.STEP_RADIUS_IN_CM),
             exclude_detected_objects=[starting_step_1]
@@ -150,8 +205,6 @@ class ClimberStartPosition:
             climber, body_center)
         climber.right_hand = self.__find_hold_for_right_hand(
             climber, body_center)
-
-        return climber
 
     def __get_bottom_objects_fit_as_steps(self, max_distance_from_ground_in_cm: int) -> [DetectedObject]:
         max_distance_from_ground_in_px = (
