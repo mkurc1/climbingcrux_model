@@ -201,9 +201,9 @@ class ClimberStartPosition:
             detected_object=starting_right_step
         )
 
-        climber.left_hand = self.__find_hold_for_left_hand(
+        climber.left_arm = self.__find_hold_for_left_arm(
             climber, body_center)
-        climber.right_hand = self.__find_hold_for_right_hand(
+        climber.right_arm = self.__find_hold_for_right_arm(
             climber, body_center)
 
     def __get_bottom_objects_fit_as_steps(self, max_distance_from_ground_in_cm: int) -> [DetectedObject]:
@@ -217,7 +217,7 @@ class ClimberStartPosition:
                 obj.bbox[2] < 0.85 * self.__img_width
                 ]
 
-    def __find_hold_for_left_hand(self, climber: Climber,
+    def __find_hold_for_left_arm(self, climber: Climber,
                                   body_center: int) -> BodyPart:
         # get holds available for left hand
         holds = objects_detector.get_objects_around_point(
@@ -231,18 +231,18 @@ class ClimberStartPosition:
         holds = [hold for hold in holds
                  if hold.center.x < body_center]
 
-        random_left_hand_hold_id = np.random.choice(len(holds), 1, replace=False)[0]
-        random_left_hand_hold = holds[random_left_hand_hold_id]
+        random_left_arm_hold_id = np.random.choice(len(holds), 1, replace=False)[0]
+        random_left_arm_hold = holds[random_left_arm_hold_id]
 
         return BodyPart(
             start=climber.left_shoulder.start,
-            end=random_left_hand_hold.center,
+            end=random_left_arm_hold.center,
             color=Color.red(),
             thickness=10,
-            detected_object=random_left_hand_hold
+            detected_object=random_left_arm_hold
         )
 
-    def __find_hold_for_right_hand(self, climber: Climber,
+    def __find_hold_for_right_arm(self, climber: Climber,
                                    body_center: int) -> BodyPart:
         # get holds available for right hand
         holds = objects_detector.get_objects_around_point(
@@ -256,15 +256,15 @@ class ClimberStartPosition:
         holds = [hold for hold in holds
                  if hold.center.x > body_center]
 
-        random_right_hand_hold_id = np.random.choice(len(holds), 1, replace=False)[0]
-        random_right_hand_hold = holds[random_right_hand_hold_id]
+        random_right_arm_hold_id = np.random.choice(len(holds), 1, replace=False)[0]
+        random_right_arm_hold = holds[random_right_arm_hold_id]
 
         return BodyPart(
             start=climber.right_shoulder.end,
-            end=random_right_hand_hold.center,
+            end=random_right_arm_hold.center,
             color=Color.red(),
             thickness=10,
-            detected_object=random_right_hand_hold
+            detected_object=random_right_arm_hold
         )
 
     def __find_hold_in_circle(self, detected_objects: [DetectedObject],

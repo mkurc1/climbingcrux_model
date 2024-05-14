@@ -2,6 +2,8 @@ import cv2
 from PIL import Image
 from IPython.display import display
 
+from src import config
+from src.model.climber import Climber
 from src.model.detected_object import DetectedObject
 from src.model.body_part import BodyPart
 from src.model.color import Color
@@ -67,6 +69,28 @@ def draw_body_part(img: cv2.typing.MatLike, body_part: BodyPart, override: bool 
 
     cv2.line(img, body_part.start.to_tuple(), body_part.end.to_tuple(),
              body_part.color.bgr(), body_part.thickness)
+
+    return img
+
+
+def draw_climber(img: cv2.typing.MatLike, climber: Climber, override: bool = True) -> cv2.typing.MatLike:
+    if not override:
+        img = img.copy()
+
+    for body_part in [climber.head, climber.neck, climber.trunk, climber.left_shoulder, climber.right_shoulder,
+                      climber.left_leg, climber.right_leg, climber.left_arm, climber.right_arm]:
+        draw_body_part(
+            img,
+            body_part,
+        )
+        if body_part.detected_object is not None:
+            draw_bboxes(
+                img=img,
+                detected_objects=[body_part.detected_object],
+                bbox_color=config.PROBLEM_STEP_BBOX_COLOR,
+                bbox_center_color=config.BBOX_CENTER_COLOR,
+                line_width=config.LINE_WIDTH
+            )
 
     return img
 
