@@ -11,7 +11,7 @@ from src import objects_detector, config
 from src.model.point import Point
 
 
-class ClimberStartPosition:
+class RouteGenerator:
     def __init__(self, img_width: int, img_height: int, marker: ArucoMarker,
                  detected_objects: [DetectedObject]):
         self.__img_width = img_width
