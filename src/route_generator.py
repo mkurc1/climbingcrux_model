@@ -19,7 +19,19 @@ class RouteGenerator:
         self.__marker = marker
         self.__detected_objects = detected_objects
 
-    def prepare_next_step(self, climber: Climber) -> Climber:
+    def generate_route(self, climber_height_in_cm: int,
+                       starting_steps_max_distance_from_ground_in_cm: int) -> [Climber]:
+        steps: [Climber] = [self.__prepare_first_step(
+            climber_height_in_cm,
+            starting_steps_max_distance_from_ground_in_cm
+        )]
+
+        while not self.__is_climber_on_top(steps[-1]):
+            steps.append(self.__prepare_next_step(steps[-1]))
+
+        return steps
+
+    def __prepare_next_step(self, climber: Climber) -> Climber:
         new_climber = copy.deepcopy(climber)
 
         lower_step_point = climber.get_lower_step_point()
@@ -62,8 +74,8 @@ class RouteGenerator:
 
         return new_climber
 
-    def prepare_first_step(self, climber_height_in_cm: int,
-                starting_steps_max_distance_from_ground_in_cm: int) -> Climber:
+    def __prepare_first_step(self, climber_height_in_cm: int,
+                             starting_steps_max_distance_from_ground_in_cm: int) -> Climber:
         climber_height_in_px = self.__marker.convert_cm_to_px(climber_height_in_cm)
         climber = Climber(climber_height_in_px)
 
@@ -218,7 +230,7 @@ class RouteGenerator:
                 ]
 
     def __find_hold_for_left_arm(self, climber: Climber,
-                                  body_center: int) -> BodyPart:
+                                 body_center: int) -> BodyPart:
         # get holds available for left hand
         holds = objects_detector.get_objects_around_point(
             detected_objects=self.__detected_objects,
@@ -243,7 +255,7 @@ class RouteGenerator:
         )
 
     def __find_hold_for_right_arm(self, climber: Climber,
-                                   body_center: int) -> BodyPart:
+                                  body_center: int) -> BodyPart:
         # get holds available for right hand
         holds = objects_detector.get_objects_around_point(
             detected_objects=self.__detected_objects,
@@ -280,3 +292,23 @@ class RouteGenerator:
 
         object_detect_id = np.random.choice(len(holds_in_circle), 1, replace=False)[0]
         return holds_in_circle[object_detect_id]
+
+    def __is_climber_on_top(self, climber: Climber) -> bool:
+        point_above_head = Point(
+            x=climber.head.start.x,
+            y=int(climber.head.start.y - climber.body_proportion.head * 2)
+        )
+
+        holds_around_point = objects_detector.get_objects_around_point(
+            detected_objects=self.__detected_objects,
+            point=point_above_head,
+            radius=climber.body_proportion.arm
+        )
+
+        # exclude holds below point above head
+        holds_around_point = list(filter(
+            lambda hold: hold.center.y < point_above_head.y,
+            holds_around_point
+        ))
+
+        return len(holds_around_point) == 0
