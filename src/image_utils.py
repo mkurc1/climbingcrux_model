@@ -54,7 +54,8 @@ def draw_line(img: cv2.typing.MatLike, start_point: Point, end_point: Point,
     return img
 
 
-def draw_rectangle(img: cv2.typing.MatLike, start_point: Point, end_point: Point, color: Color, line_width: int, override: bool = True) -> cv2.typing.MatLike:
+def draw_rectangle(img: cv2.typing.MatLike, start_point: Point, end_point: Point, color: Color, line_width: int,
+                   override: bool = True) -> cv2.typing.MatLike:
     if not override:
         img = img.copy()
 
@@ -73,16 +74,19 @@ def draw_body_part(img: cv2.typing.MatLike, body_part: BodyPart, override: bool 
     return img
 
 
-def draw_climber(img: cv2.typing.MatLike, climber: Climber, override: bool = True) -> cv2.typing.MatLike:
+def draw_climber(img: cv2.typing.MatLike, climber: Climber, body: bool = False,
+                 override: bool = True) -> cv2.typing.MatLike:
     if not override:
         img = img.copy()
 
     for body_part in [climber.head, climber.neck, climber.trunk, climber.left_shoulder, climber.right_shoulder,
                       climber.left_leg, climber.right_leg, climber.left_arm, climber.right_arm]:
-        draw_body_part(
-            img,
-            body_part,
-        )
+        if body:
+            draw_body_part(
+                img,
+                body_part,
+            )
+
         if body_part.detected_object is not None:
             draw_bboxes(
                 img=img,
