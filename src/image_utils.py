@@ -11,7 +11,8 @@ from src.model.point import Point
 
 
 def draw_bboxes(img: cv2.typing.MatLike, detected_objects: [DetectedObject], bbox_color: Color,
-                bbox_center_color: Color, line_width: int, override: bool = True) -> cv2.typing.MatLike:
+                bbox_center_color: Color, line_width: int, draw_labels: bool = True,
+                draw_centers: bool = True, override: bool = True) -> cv2.typing.MatLike:
     if not override:
         img = img.copy()
 
@@ -19,10 +20,13 @@ def draw_bboxes(img: cv2.typing.MatLike, detected_objects: [DetectedObject], bbo
         x1, y1, x2, y2 = detected_object.bbox
 
         cv2.rectangle(img, (x1, y1), (x2, y2), bbox_color.bgr(), line_width)
-        cv2.circle(img, detected_object.center.to_tuple(), 5, bbox_center_color.bgr(), -1)
 
-        result_name = detected_object.class_name
-        cv2.putText(img, result_name, (x1, y1 - 5), cv2.FONT_HERSHEY_PLAIN, 1, bbox_color.bgr(), line_width)
+        if draw_centers:
+            cv2.circle(img, detected_object.center.to_tuple(), 5, bbox_center_color.bgr(), -1)
+
+        if draw_labels:
+            result_name = detected_object.class_name
+            cv2.putText(img, result_name, (x1, y1 - 5), cv2.FONT_HERSHEY_PLAIN, 1, bbox_color.bgr(), line_width)
     return img
 
 
@@ -75,7 +79,7 @@ def draw_body_part(img: cv2.typing.MatLike, body_part: BodyPart, override: bool 
 
 
 def draw_climber(img: cv2.typing.MatLike, climber: Climber, body: bool = False,
-                 override: bool = True) -> cv2.typing.MatLike:
+                 draw_labels: bool = False, draw_centers: bool = False, override: bool = True) -> cv2.typing.MatLike:
     if not override:
         img = img.copy()
 
@@ -93,7 +97,9 @@ def draw_climber(img: cv2.typing.MatLike, climber: Climber, body: bool = False,
                 detected_objects=[body_part.detected_object],
                 bbox_color=config.PROBLEM_STEP_BBOX_COLOR,
                 bbox_center_color=config.BBOX_CENTER_COLOR,
-                line_width=config.LINE_WIDTH
+                line_width=config.LINE_WIDTH,
+                draw_labels=draw_labels,
+                draw_centers=draw_centers,
             )
 
     return img
