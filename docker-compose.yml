@@ -1,0 +1,11 @@
+services:
+  app:
+    build: .
+    command: fastapi dev main.py --host 0.0.0.0
+    ports:
+      - 8000:8000
+    restart: always
+    volumes:
+      - .:/code
+    env_file:
+      - .env
