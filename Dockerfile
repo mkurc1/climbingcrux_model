@@ -6,7 +6,9 @@ ENV PYTHONUNBUFFERED 1
 
 # Install dependencies
 RUN apt-get update \
-    && apt-get install curl build-essential -y \
+    && apt-get install curl  \
+    ffmpeg libsm6 libxext6 libgl1  \
+    build-essential -y \
     && curl -sSL https://install.python-poetry.org | python - --version 1.3.2
 
 ENV PATH="/root/.local/bin:$PATH"
