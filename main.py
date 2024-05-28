@@ -4,7 +4,7 @@ import imutils
 import numpy as np
 
 from fastapi import FastAPI, UploadFile
-from starlette.responses import StreamingResponse, FileResponse
+from starlette.responses import StreamingResponse
 
 from src import config, image_utils, objects_detector
 from src.aruco_marker import ArucoMarker
