@@ -1,4 +1,4 @@
-FROM python:3.11.8-slim
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
