@@ -2,6 +2,7 @@ import io
 import cv2
 import imutils
 import numpy as np
+import uvicorn
 
 from fastapi import FastAPI, UploadFile
 from starlette.responses import StreamingResponse
@@ -10,7 +11,7 @@ from src import config, image_utils, objects_detector
 from src.aruco_marker import ArucoMarker
 from src.route_generator import RouteGenerator
 
-app = FastAPI()
+app = FastAPI(title="Climbing Crux Route Generator")
 
 
 @app.post("/boulder/generate")
