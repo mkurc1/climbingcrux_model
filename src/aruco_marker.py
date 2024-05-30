@@ -13,7 +13,7 @@ class ArucoMarker:
         params = cv2.aruco.DetectorParameters()
         markers = cv2.aruco.detectMarkers(gray, dictionary, parameters=params)[0]
 
-        if markers is None:
+        if len(markers) == 0:
             raise ValueError("No ArUco marker detected")
 
         self.corners = markers[0]
