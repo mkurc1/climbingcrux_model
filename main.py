@@ -2,9 +2,8 @@ import io
 import cv2
 import imutils
 import numpy as np
-import uvicorn
 
-from fastapi import FastAPI, UploadFile
+from fastapi import FastAPI, UploadFile, HTTPException
 from starlette.responses import StreamingResponse
 
 from src import config, image_utils, objects_detector
@@ -23,7 +22,11 @@ async def generate_boulder(file: UploadFile):
 
     img = imutils.resize(img, width=1216)
 
-    marker = ArucoMarker(config.MARKER_ARUCO_DICT, img, config.MARKER_PERIMETER_IN_CM)
+    try:
+        marker = ArucoMarker(config.MARKER_ARUCO_DICT, img, config.MARKER_PERIMETER_IN_CM)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="No ArUco marker detected")
+
     detected_objects = objects_detector.detect(img)
 
     route_generator = RouteGenerator(
