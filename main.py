@@ -3,7 +3,7 @@ import cv2
 import imutils
 import numpy as np
 
-from fastapi import FastAPI, UploadFile, HTTPException
+from fastapi import FastAPI, UploadFile, HTTPException, status
 from starlette.responses import StreamingResponse
 
 from src import config, image_utils, objects_detector
@@ -16,6 +16,9 @@ app = FastAPI(title="Climbing Crux Route Generator")
 @app.post("/boulder/generate")
 async def generate_boulder(file: UploadFile):
     contents = await file.read()
+
+    validate_file(file)
+
     npimg = np.frombuffer(contents, np.uint8)
     frame = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
     img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -53,3 +56,17 @@ async def generate_boulder(file: UploadFile):
 
     _, im_png = cv2.imencode(".png", img)
     return StreamingResponse(io.BytesIO(im_png.tobytes()), media_type="image/png")
+
+
+def validate_file(file: UploadFile) -> None:
+    if file.content_type not in config.ACCEPTED_MIME_TYPES:
+        raise HTTPException(
+            status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
+            detail="Unsupported file type",
+        )
+
+    real_file_size = 0
+    for chunk in file.file:
+        real_file_size += len(chunk)
+        if real_file_size > config.MAXIMUM_FILE_SIZE:
+            raise HTTPException(status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE, detail="Too large")

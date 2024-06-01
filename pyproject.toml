@@ -19,6 +19,7 @@ flake8 = "^7.0.0"
 python-dotenv = "^1.0.1"
 fastapi = "^0.111.0"
 torch = "2.2.2"
+python-multipart = "^0.0.9"
 
 
 [build-system]

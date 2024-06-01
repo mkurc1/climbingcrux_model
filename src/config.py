@@ -35,3 +35,6 @@ CLIMBER_HEIGHT_IN_CM = 170
 STEP_RADIUS_IN_CM = 70
 
 LINE_WIDTH = 2
+
+MAXIMUM_FILE_SIZE = 1024 * 1024 * 4  # 4MB
+ACCEPTED_MIME_TYPES = ["image/png", "image/jpeg", "image/jpg"]
