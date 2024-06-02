@@ -20,8 +20,7 @@ async def generate_boulder(file: UploadFile):
     validate_file(file)
 
     npimg = np.frombuffer(contents, np.uint8)
-    frame = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
-    img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    img = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
 
     img = imutils.resize(img, width=1216)
 
@@ -51,8 +50,6 @@ async def generate_boulder(file: UploadFile):
             draw_labels=False,
             draw_centers=False,
         )
-
-    # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
     _, im_png = cv2.imencode(".png", img)
     return StreamingResponse(io.BytesIO(im_png.tobytes()), media_type="image/png")
