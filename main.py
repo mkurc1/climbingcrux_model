@@ -14,7 +14,10 @@ app = FastAPI(title="Climbing Crux Route Generator")
 
 
 @app.post("/boulder/generate")
-async def generate_boulder(file: UploadFile):
+async def generate_boulder(file: UploadFile) -> StreamingResponse:
+    """
+    Generate a boulder route from an image
+    """
     contents = await file.read()
 
     validate_file(file)
@@ -27,7 +30,7 @@ async def generate_boulder(file: UploadFile):
     try:
         marker = ArucoMarker(config.MARKER_ARUCO_DICT, img, config.MARKER_PERIMETER_IN_CM)
     except ValueError:
-        raise HTTPException(status_code=400, detail="No ArUco marker detected")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No ArUco marker detected")
 
     detected_objects = objects_detector.detect(img)
 
