@@ -22,8 +22,8 @@ async def generate_boulder(file: UploadFile) -> StreamingResponse:
 
     validate_file(file)
 
-    npimg = np.frombuffer(contents, np.uint8)
-    img = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
+    np_img = np.frombuffer(contents, np.uint8)
+    img = cv2.imdecode(np_img, cv2.IMREAD_COLOR)
 
     img = imutils.resize(img, width=1216)
 
@@ -43,7 +43,7 @@ async def generate_boulder(file: UploadFile) -> StreamingResponse:
 
     steps = route_generator.generate_route(
         climber_height_in_cm=config.CLIMBER_HEIGHT_IN_CM,
-        starting_steps_max_distance_from_ground_in_cm=40
+        starting_steps_max_distance_from_ground_in_cm=config.STARTING_STEPS_MAX_DISTANCE_FROM_GROUND_IN_CM
     )
 
     for step in steps:
