@@ -4,6 +4,8 @@ The climbing crux model is a machine-learning project that aims to recognize cli
 
 The model recognizes climbing holds and volumes from a photo using the YOLOv9 object detection algorithm. The model is trained on a custom dataset containing photos of climbing walls and annotations in the YOLO format.
 
+You can generate climbing routes through the FastAPI.
+
 ### Generated climbing route preview
 ![Generated climbing route preview](./resources/route_preview.jpg)
 
@@ -14,41 +16,64 @@ The model recognizes climbing holds and volumes from a photo using the YOLOv9 ob
 ![Starting position preview](./resources/starting_position_preview.jpg)
 
 ## Setup
+You can run the project locally or using Docker.
 
+### Local setup
 To run the project, you need to have Python 3.11 and the required packages installed. You can install the required packages using the following command:
 
-### Install pyenv and Python 3.11
+#### Install pyenv and Python 3.11
 ```bash
 $ curl https://pyenv.run | bash
 $ pyenv install 3.11.8
 ```
 
-### Turn on pyenv
+#### Turn on pyenv
 ```bash 
 $ pyenv shell 3.11.8
 ```
 
-### Install poetry and the required packages
+#### Install poetry and the required packages
 ```bash
 $ python -m pip install poetry
 $ poetry install
 ```
 
-### Turn on the virtual environment
+#### Turn on the virtual environment
 ```bash
 $ poetry shell
 ```
 
-### Create `env` file by copying the example and update the model path
+#### Create `env` file by copying the example and update the model path
 
 ```bash
 $ cp .env.dist .env
 $ nano .env
 ```
 
-### Turn on the Jupyter Lab
+#### Turn on the Jupyter Lab
 ```bash
 $ jupyter-lab
+```
+
+### Docker setup
+
+To run the project using Docker, you need to have Docker installed. You can build the Docker image and run the container using the following commands:
+
+#### Create `env` file by copying the example and update the model path
+
+```bash
+$ cp .env.dist .env
+$ nano .env
+```
+
+#### Build the Docker image
+```bash
+$ docker compose up -d --build
+```
+
+#### Swagger API documentation
+```bash
+$ http://localhost:8000/docs
 ```
 
 ## Data
@@ -86,6 +111,17 @@ You can download the trained model from the link below.
 * [Train Yolov8 object detection on a custom dataset](https://www.youtube.com/watch?v=m9fH9OWn8YM)
 * [Object Detection with YOLO v8 on Mac M1](https://www.youtube.com/watch?v=kEcWUZ8unmc)
 * [Online Annotation Platform](https://www.cvat.ai/)
+
+## To do
+
+* [x] Train the YOLOv9 object detection model
+* [x] detect climbing holds and volumes from a photo
+* [x] Calculate the distance between climbing holds
+* [x] Generate climbing routes
+* [x] Generate climbing routes using the Jupyter Notebook
+* [x] Generate climbing routes using the FastAPI
+* [ ] Improve ground detection
+* [ ] Generate climbing routes on different wall angles
 
 ## License
 
