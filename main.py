@@ -41,15 +41,15 @@ async def generate_boulder(file: UploadFile) -> StreamingResponse:
         detected_objects=detected_objects
     )
 
-    steps = route_generator.generate_route(
+    positions = route_generator.generate_route(
         climber_height_in_cm=config.CLIMBER_HEIGHT_IN_CM,
         starting_steps_max_distance_from_ground_in_cm=config.STARTING_STEPS_MAX_DISTANCE_FROM_GROUND_IN_CM
     )
 
-    for step in steps:
+    for climber_position in positions:
         img = image_utils.draw_climber(
             img=img,
-            climber=step,
+            climber=climber_position,
             draw_labels=False,
             draw_centers=False,
         )

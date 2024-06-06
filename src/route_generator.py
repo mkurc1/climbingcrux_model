@@ -21,17 +21,17 @@ class RouteGenerator:
 
     def generate_route(self, climber_height_in_cm: int,
                        starting_steps_max_distance_from_ground_in_cm: int) -> [Climber]:
-        steps: [Climber] = [self.prepare_first_step(
+        positions: [Climber] = [self.prepare_first_position(
             climber_height_in_cm,
             starting_steps_max_distance_from_ground_in_cm
         )]
 
-        while not self.__is_climber_on_top(steps[-1]):
-            steps.append(self.prepare_next_step(steps[-1]))
+        while not self.__is_climber_on_top(positions[-1]):
+            positions.append(self.prepare_next_position(positions[-1]))
 
-        return steps
+        return positions
 
-    def prepare_next_step(self, climber: Climber) -> Climber:
+    def prepare_next_position(self, climber: Climber) -> Climber:
         new_climber = copy.deepcopy(climber)
 
         lower_step_point = climber.get_lower_step_point()
@@ -74,8 +74,8 @@ class RouteGenerator:
 
         return new_climber
 
-    def prepare_first_step(self, climber_height_in_cm: int,
-                             starting_steps_max_distance_from_ground_in_cm: int) -> Climber:
+    def prepare_first_position(self, climber_height_in_cm: int,
+                               starting_steps_max_distance_from_ground_in_cm: int) -> Climber:
         climber_height_in_px = self.__marker.convert_cm_to_px(climber_height_in_cm)
         climber = Climber(climber_height_in_px)
 
