@@ -1,12 +1,14 @@
 import math
 import cv2
+import imutils
 
 from src.model.color import Color
 
 
 class ArucoMarker:
     def __init__(self, aruco_dict: int, image: cv2.typing.MatLike, marker_perimeter_in_cm: float):
-        gray = cv2.cvtColor(image.copy(), cv2.COLOR_BGR2GRAY)
+        img_tmp = imutils.resize(image.copy(), width=1216)
+        gray = cv2.cvtColor(img_tmp, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (7, 7), 0)
 
         dictionary = cv2.aruco.getPredefinedDictionary(aruco_dict)
