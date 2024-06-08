@@ -41,12 +41,12 @@ class RouteGenerator:
 
         twenty_percent_of_climber_leg_height_point = Point(
             lower_step_point.x,
-            int(lower_step_point.y - twenty_percent_of_climber_leg_height)
+            int(round(lower_step_point.y - twenty_percent_of_climber_leg_height))
         )
 
         forty_percent_of_climber_leg_height_point = Point(
             lower_step_point.x,
-            int(lower_step_point.y - forty_percent_of_climber_leg_height)
+            int(round(lower_step_point.y - forty_percent_of_climber_leg_height))
         )
 
         rectangle_bottom_left_point = Point(climber.get_bottom_left_point().x,
@@ -115,15 +115,15 @@ class RouteGenerator:
             if starting_step_1.center.y > starting_step_2.center.y \
             else starting_step_2
 
-        body_center = int((starting_left_step.center.x +
-                           starting_right_step.center.x) / 2)
+        body_center = int(round((starting_left_step.center.x +
+                                 starting_right_step.center.x) / 2))
 
         top_head_point = Point(
             body_center,
-            int(lower_starting_step.center.y - climber.body_proportion.height))
+            int(round(lower_starting_step.center.y - climber.body_proportion.height)))
         bottom_head_point = Point(
             body_center,
-            int(lower_starting_step.center.y - climber.body_proportion.height +
+            int(round(lower_starting_step.center.y - climber.body_proportion.height) +
                 climber.body_proportion.head))
 
         climber.head = BodyPart(
@@ -136,7 +136,7 @@ class RouteGenerator:
         top_neck_point = Point(top_head_point.x, int(bottom_head_point.y))
         bottom_neck_point = Point(
             bottom_head_point.x,
-            int(bottom_head_point.y + climber.body_proportion.neck)
+            int(round(bottom_head_point.y + climber.body_proportion.neck))
         )
 
         climber.neck = BodyPart(
@@ -146,10 +146,10 @@ class RouteGenerator:
             thickness=10
         )
 
-        top_trunk_point = Point(top_head_point.x, int(bottom_neck_point.y))
+        top_trunk_point = Point(top_head_point.x, int(round(bottom_neck_point.y)))
         bottom_trunk_point = Point(
             bottom_head_point.x,
-            int(bottom_neck_point.y + climber.body_proportion.trunk)
+            int(round(bottom_neck_point.y + climber.body_proportion.trunk))
         )
 
         climber.trunk = BodyPart(
@@ -160,7 +160,7 @@ class RouteGenerator:
         )
 
         start_left_shoulder_point = Point(
-            bottom_neck_point.x - int(climber.body_proportion.shoulder),
+            bottom_neck_point.x - int(round(climber.body_proportion.shoulder)),
             bottom_neck_point.y
         )
         end_left_shoulder_point = Point(bottom_neck_point.x, bottom_neck_point.y)
@@ -176,7 +176,7 @@ class RouteGenerator:
             bottom_neck_point.x, bottom_neck_point.y
         )
         end_right_shoulder_point = Point(
-            bottom_neck_point.x + int(climber.body_proportion.shoulder),
+            bottom_neck_point.x + int(round(climber.body_proportion.shoulder)),
             bottom_neck_point.y
         )
 
@@ -235,7 +235,7 @@ class RouteGenerator:
         holds = objects_detector.get_objects_around_point(
             detected_objects=self.__detected_objects,
             point=climber.left_shoulder.start,
-            radius=int(climber.body_proportion.arm)
+            radius=int(round(climber.body_proportion.arm))
         )
 
         # exclude holds that are on the right side of
@@ -260,7 +260,7 @@ class RouteGenerator:
         holds = objects_detector.get_objects_around_point(
             detected_objects=self.__detected_objects,
             point=climber.right_shoulder.end,
-            radius=int(climber.body_proportion.arm)
+            radius=int(round(climber.body_proportion.arm))
         )
 
         # exclude holds that are on the left side of
@@ -296,7 +296,7 @@ class RouteGenerator:
     def __is_climber_on_top(self, climber: Climber) -> bool:
         point_above_head = Point(
             x=climber.head.start.x,
-            y=int(climber.head.start.y - climber.body_proportion.head * 2)
+            y=int(round(climber.head.start.y - climber.body_proportion.head * 2))
         )
 
         holds_around_point = objects_detector.get_objects_around_point(

@@ -31,8 +31,8 @@ def detect(img: cv2.typing.MatLike, conf: float = 0.85,
             class_name=result.names[class_id],
             bbox=bbox,
             center=Point(
-                x=int(center[0]),
-                y=int(center[1])
+                x=int(round(center[0])),
+                y=int(round(center[1]))
             )
         ))
 
@@ -66,4 +66,4 @@ def get_distance_between_objects(object1: DetectedObject,
 
     distance = math.sqrt((c1.x - c2.x) ** 2 + (c1.y - c2.y) ** 2)
 
-    return int(distance)
+    return int(round(distance))
